@@ -22,9 +22,9 @@ $_SESSION["sectok"] = uniqid(true);
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--if lt IE 9
-		script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-		script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
-		-->
+        script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+        script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
+        -->
 </head>
 
 <body>
@@ -33,10 +33,10 @@ $_SESSION["sectok"] = uniqid(true);
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
+                    <span class="sr-only">Toggle navigation</span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="#">Place for logo</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
@@ -68,7 +68,7 @@ $_SESSION["sectok"] = uniqid(true);
                         <select class="area-val" style="width: 100%">
                            <option value="1">Hillvesum</option>
                            <option value="2">Slagelse</option>
-                           <option value="3">Hellerup</option>			
+                           <option value="3">Hellerup</option>          
                   </select>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ $_SESSION["sectok"] = uniqid(true);
             <div class="col-md-8">
                 <h3>Results</h3>
                 <hr>
-                <div id="out"></div>
+                <div id="out" style="height:50px"></div>
     <div id="platno" style="width: 516px; height: 250px"><img id="imgload" src="images/ajax-loader.gif" /></div>
                
                 <hr>
@@ -108,13 +108,15 @@ $_SESSION["sectok"] = uniqid(true);
         var lat = Array();
         var lang = Array();
         
-        $(document).ready(function() {
-
             $('#housePrice').slider({
                 tooltip: 'show'
             });
 
             $(".area-val").select2();
+
+        $(document).ready(function() {
+
+
 
             min = $('#housePrice').data("slider-min");
             max = $('#housePrice').data("slider-max");
@@ -146,7 +148,7 @@ $_SESSION["sectok"] = uniqid(true);
                     maxprice: max
                 },
                 beforeSend: function(xhr) {
-                    $("#out").hide();
+                   // $("#out").hide();
                     //$("#platno").append('<img id="imgload" src="images/ajax-loader.gif" />');
                     xhr.setRequestHeader('X-Sec-Header', '<?php echo $_SESSION["sectok"]; ?>' );
                 }
@@ -156,15 +158,15 @@ $_SESSION["sectok"] = uniqid(true);
 
                 var obj = jQuery.parseJSON(msg);
                 var nr = obj[0].numrows;
-				lat = []; 	
-				lang = [];
-                for (i=1; i<=nr; i++){         
-					lat.push(obj[i].lat);
-					lang.push(obj[i].lang);
-                }
-                afterLoad(nr,lat,lang);      
-                $("#out").show();
-                $("#out").html("Query found " + nr + " result(s)").fadeIn("slow", "linear");
+                lat = [];   
+                lang = [];
+               locations = [];
+               for (i = 1; i <= nr; i++) {
+                   locations.push([obj[i].slug, obj[i].lat, obj[i].lang], i);
+               }
+                afterLoad(nr, locations);      
+               //$("#out").show();
+                $("#out").html("Query found " + nr + " result(s)");//.fadeIn("slow", "linear");
             });
 
             request.fail(function(jqXHR, textStatus) {
@@ -172,53 +174,39 @@ $_SESSION["sectok"] = uniqid(true);
             });
 
             request.always(function() {
-                $("#imgload").remove();
+                //$("#imgload").remove();
             });
         }
 
-        function afterLoad (nr,lat,lang) {  
-                    var mapDiv = document.getElementById('platno');
-                    var map = new google.maps.Map(mapDiv, {
-                        center: new google.maps.LatLng(55.399833, 11.374667),
-                        zoom: 6,
-                        disableDefaultUI: false,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP,
-                        scrollwheel: false,
-                        navigationControl: true
-                    });
+       function afterLoad(nr, locations) {
+           var mapDiv = document.getElementById('platno');
+           var map = new google.maps.Map(mapDiv, {
+               center: new google.maps.LatLng(55.399833, 11.374667),
+               zoom: 6,
+               disableDefaultUI: false,
+               mapTypeId: google.maps.MapTypeId.ROADMAP,
+               scrollwheel: false,
+               navigationControl: true
+           });
 
-          var infoWindowContent = [];
-                          
-                    for (i=0; i<nr; i++){
-                    	var point = new google.maps.LatLng(lat[i],lang[i]);
-                        /////////
+           var infowindow = new google.maps.InfoWindow();
 
-        var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Lorem Ipsum</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, i' +
-            'sandstone rock fo '+
-            '335&#160;km (208&#160;mi) '+
-            '</div>'+
-            '</div>';
-            infoWindowContent.push(contentString);
+           var marker, i;
 
-        var infowindow = new google.maps.InfoWindow({
-          content: infoWindowContent[i]
-        });
+           for (i = 0; i < locations.length; i++) {
+               marker = new google.maps.Marker({
+                   position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                   map: map
+               });
 
-        var marker = new google.maps.Marker({
-          position: point,
-          map: map,
-          title: 'Uluru (Ayers Rock)'
-        });
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
-        }  // endfor
-};
+               google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                   return function() {
+                       infowindow.setContent(locations[i][0]);
+                       infowindow.open(map, marker);
+                   };
+               })(marker, i));
+           } // endfor
+       }
 </script>
 </body>
 
