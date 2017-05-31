@@ -1,3 +1,5 @@
+![ScreenShot](http://nikolabodr.com/images/portfolio.gif)
+
 # Apartment finder
 - finds aparments by using range slider and select2 component
 - shows pins on google map
@@ -13,3 +15,4 @@
 - import data from `data.sql`
 - change credentials in ajax.php
 - open `localhost/folkmatic`
+
