@@ -1,4 +1,4 @@
-![ScreenShot](http://nikolabodr.com/images/portfolio.gif)
+![ScreenShot](http://nikolabodr.com/images/apartmentportfolio.gif)
 
 # Apartment finder
 - finds aparments by using range slider and select2 component
@@ -13,6 +13,6 @@
 # Deployment
 - copy files to `/var/www/html/folkmatic`
 - import data from `data.sql`
-- change credentials in ajax.php
+- change database credentials in config.php.dist and rename to config.php
 - open `localhost/folkmatic`
 

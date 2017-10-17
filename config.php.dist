@@ -1,0 +1,8 @@
+<?php
+// MySQL database params
+$username = "root";
+$password = "";
+$hostname = "localhost";
+$dataBase = "test";
+$character_set = "utf8";
+?>

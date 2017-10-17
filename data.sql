@@ -1,20 +1,16 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6
+-- version 4.7.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 18, 2017 at 06:45 PM
--- Server version: 5.6.35-log
+-- Generation Time: Oct 18, 2017 at 01:28 AM
+-- Server version: 5.6.37-log
 -- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `nikolabo_ingatio`
@@ -40,12 +36,14 @@ CREATE TABLE `fol_apartment` (
 --
 
 INSERT INTO `fol_apartment` (`id`, `slug`, `rent_amount`, `area_id`, `lat`, `lang`) VALUES
-(1, 'hyggeligt-raekkehus-med-central-beliggenhed', 48000, 1, 55.706631, 11.580622),
-(2, 'utrolig-udsigtslejlighed-i-det-prisbelonnede-8', 12000, 1, 55.682789, 13.591911),
-(3, 'stor-skon-villa-med-havudsigt', 18000, 2, 55.399837, 11.372463),
-(4, 'house-nice-view', 48000, 3, 55.081406, 12.013550),
-(5, 'house-wiht-garden', 11000, 3, 55.729069, 13.120422),
-(6, 'apartment-with-riverfront', 45000, 2, 55.156799, 11.898193);
+(1, 'studio-for-big-family', 48000, 1, 51.881409, -0.568542),
+(2, 'house-with-garden', 12000, 1, 51.915302, -0.304871),
+(3, 'apartment-in-quiet-street', 18000, 2, 51.527370, 0.153809),
+(4, 'house-nice-view', 48000, 2, 51.523952, -0.401001),
+(5, 'house-with-yard', 11000, 2, 51.479504, 0.175781),
+(6, 'apartment-with-riverfront', 45000, 2, 51.308125, -0.241699),
+(7, 'nice-house-in-suburb', 12000, 3, 51.769371, -1.444702),
+(8, 'studio-for-single-person', 15000, 3, 51.782967, -1.038208);
 
 -- --------------------------------------------------------
 
@@ -63,9 +61,9 @@ CREATE TABLE `fol_city` (
 --
 
 INSERT INTO `fol_city` (`id`, `name`) VALUES
-(1, 'Kopenhagen'),
-(2, 'Slagelse'),
-(3, 'Hellerup');
+(1, 'Luton'),
+(2, 'London'),
+(3, 'Oxford');
 
 --
 -- Indexes for dumped tables
@@ -91,12 +89,9 @@ ALTER TABLE `fol_city`
 -- AUTO_INCREMENT for table `fol_apartment`
 --
 ALTER TABLE `fol_apartment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `fol_city`
 --
 ALTER TABLE `fol_city`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;COMMIT;
